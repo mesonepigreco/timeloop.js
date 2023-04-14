@@ -7,15 +7,16 @@ export default class Player extends DynamicSprite {
         super(x, y, ["idle", "walk", "fall", "idle_flip", "walk_flip", "fall_flip"],
             groups);
 
-        // Initialize the animations
-        this.load_animation("idle", "data/miner/idle", 6, 13, 4);
-        this.load_animation("walk", "data/miner/walk", 0, 7, 4);
-        this.load_animation("fall", "data/miner/fall", 13, 18, 4);
+        // Initialize the idle data
+        this.load_image("data/red");
+        
+        //this.load_animation("walk", "data/miner/walk", 0, 1, 1);
+        //this.load_animation("fall", "data/miner/fall", 0, 1, 1);
 
         // Initialize the flipped animations
-        this.load_animation("idle_flip", "data/miner/idle_flip", 6, 13, 4);
-        this.load_animation("walk_flip", "data/miner/walk_flip", 0, 7, 4);
-        this.load_animation("fall_flip", "data/miner/fall_flip", 13, 18, 4);
+        //this.load_animation("idle_flip", "data/miner/idle_flip", 6, 13, 4);
+        //this.load_animation("walk_flip", "data/miner/walk_flip", 0, 7, 4);
+        //this.load_animation("fall_flip", "data/miner/fall_flip", 13, 18, 4);
 
         this.collision_group = collision_group;
 
@@ -39,12 +40,6 @@ export default class Player extends DynamicSprite {
         this.kind = "player";
     }
 
-    update_oil(dt) {
-        this.remaining_oil -= this.oil_drop_rate * dt;
-        if (this.remaining_oil <= 0) this.remaining_oil = 0;
-        this.glow_radius = this.remaining_oil; // An eventual scale factor;
-    }
-
     update_status() {
         // Check the timeout on the falling before activating the real falling event
         var is_ground = this.is_ground;
@@ -55,13 +50,13 @@ export default class Player extends DynamicSprite {
         if (is_ground && this.velocity.x == 0)
             this.current_animation = "idle";
         else if(is_ground) 
-            this.current_animation = "walk";
+            this.current_animation = "idle"; // Walk
         else
-            this.current_animation = "fall";
+            this.current_animation = "idle"; // Fall
 
         // Flip the animation if necessary
-        if (this.is_facing_left)
-            this.current_animation += "_flip";
+        //if (this.is_facing_left)
+        //    this.current_animation += "_flip";
     }
 
     update_controls() {

@@ -1,6 +1,5 @@
 import Tile from "./tiles.js";
 import Player from "./player.js";
-import Lamp from "./lamp.js";
 import * as GROUP from "./sprite_group.js";
 
 
@@ -53,20 +52,6 @@ export default class World {
             document.fonts.add(font);
         })
 
-        this.collect_audio = new Audio("data/sounds/collect.wav");
-        this.music = new Audio("data/main-theme.wav");
-        //this.music_loaded = false;
-        //this.music.src =;
-        this.music.loop = true;
-        this.music_playing = false;
-        //this.music.load();
-        //this.music.addEventListener("canplaythrough", function () {
-        //   console.log("Music loaded!");
-        //    self.music_loaded = true;
-        //}, false);
-
-        this.glow_oil_factor = 0.25;
-        this.ghost_canvas = document.createElement("canvas");
 
 
         // Load world assets
@@ -121,7 +106,7 @@ export default class World {
     }
 
     check_death(context, canvas) {
-        if (this.player.remaining_oil <= 0) {
+        /*if (this.player.remaining_oil <= 0) {
             this.player.remaining_oil = 0;
 
             // Write the you lost at the center of the screen
@@ -130,13 +115,13 @@ export default class World {
             this.paused = true;
 
             console.log("DEATH!");
-        }
+        }*/
     }
     init_music() {
-        if (!this.music_playing) {
+        /*if (!this.music_playing) {
             this.music_playing = true;
             this.music.play();
-        }
+        }*/
     }
 
     update(time, dt) {
@@ -164,8 +149,8 @@ export default class World {
             let sprite = this.collectable_sprites.sprites[i];
             if (sprite.collidewith(this.player)) {
                 // Update the player oil
-                this.player.remaining_oil += sprite.oil;
-                this.collect_audio.play();
+                //this.player.remaining_oil += sprite.oil;
+                //this.collect_audio.play();
                 sprite.kill();
             }
         }
@@ -218,7 +203,7 @@ export default class World {
         }
     }
 
-    draw_glowing_circle(position, radius, ghost_context) {
+    /*draw_glowing_circle(position, radius, ghost_context) {
         var length = 20;
         var light = 0;
 
@@ -246,9 +231,9 @@ export default class World {
             ghost_context.fill();
         }
 
-    }
+    }*/
 
-    draw_all_glowing(context, canvas) {
+    /*draw_all_glowing(context, canvas) {
 
         // Apply the glowing circle to the canvas
         //let ghost_canvas = document.getElementById("ghost");
@@ -271,7 +256,7 @@ export default class World {
         context.globalCompositeOperation = "multiply";
         context.drawImage(ghost_canvas, 0, 0);
         context.globalCompositeOperation = "source-over";
-    }
+    }*/
 
     draw(context, canvas) {
        
@@ -286,7 +271,7 @@ export default class World {
         // Draw everything
         this.visible_sprites.draw(context, this.camera);
         
-        this.draw_all_glowing(context, canvas);
+        //this.draw_all_glowing(context, canvas);
 
         // Draw the death
         if (this.death) {
@@ -381,9 +366,9 @@ export default class World {
                     let tile = new Tile(x, y, [ this.visible_sprites,  this.collision_sprites]);
                 } else if (item_str === "P") {
                     this.player = new Player(x, y, [this.visible_sprites], this.collision_sprites);
-                } else if (item_str === "L") {
+                } /*else if (item_str === "L") {
                     let lamp = new Lamp(x, y, [this.visible_sprites, this.collectable_sprites]);
-                }
+                }*/
 
                 row_index++;
             }
